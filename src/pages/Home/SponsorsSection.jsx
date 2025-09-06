@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const SponsorsSection = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [visibleSponsors, setVisibleSponsors] = useState([]);
+  const sectionRef = useRef(null);
+
   const sponsors = [
     {
       src: "/images/img_si_uk_2.png",
@@ -40,15 +44,73 @@ const SponsorsSection = () => {
       height: "152px",
       padding: "pt-[22px] pr-[22px] pb-[22px] pl-[22px]",
       borderRadius: "rounded-md"
+    },
+    {
+      src: "/assets/images/Screenshot_2025-09-06_233730-1757182121501.png",
+      alt: "The Social Affair Cafe",
+      width: "152px",
+      height: "152px",
+      padding: "pt-[16px] pr-[16px] pb-[16px] pl-[16px]",
+      borderRadius: "rounded-md"
+    },
+    {
+      src: "/assets/images/Screenshot_2025-09-06_233741-1757182273935.png",
+      alt: "Rio - Bubbly Fruity Drink",
+      width: "152px",
+      height: "152px",
+      padding: "pt-[16px] pr-[16px] pb-[16px] pl-[16px]",
+      borderRadius: "rounded-md"
+    },
+    {
+      src: "/assets/images/Screenshot_2025-09-06_233718-1757182360174.png",
+      alt: "PVP World",
+      width: "152px",
+      height: "152px",
+      padding: "pt-[16px] pr-[16px] pb-[16px] pl-[16px]",
+      borderRadius: "rounded-md"
     }
   ];
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          // Enhanced sequential animation with smooth horizontal sliding effect
+          sponsors.forEach((_, index) => {
+            setTimeout(() => {
+              setVisibleSponsors(prev => [...prev, index]);
+            }, index * 200); // Increased delay for better sequential effect
+          });
+        }
+      },
+      {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    if (sectionRef?.current) {
+      observer?.observe(sectionRef?.current);
+    }
+
+    return () => {
+      if (sectionRef?.current) {
+        observer?.unobserve(sectionRef?.current);
+      }
+    };
+  }, []);
+
   return (
-    <section className="w-full bg-background-dark">
+    <section className="w-full bg-background-dark" ref={sectionRef}>
       <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-0">
         <div className="flex flex-col justify-start items-center w-full">
           <h2 
-            className="text-[30px] sm:text-[40px] md:text-[50px] lg:text-4xl font-bold leading-[44px] sm:leading-[59px] md:leading-[74px] lg:leading-4xl text-left text-text-accent mt-[212px]"
+            className={`text-[30px] sm:text-[40px] md:text-[50px] lg:text-4xl font-bold leading-[44px] sm:leading-[59px] md:leading-[74px] lg:leading-4xl text-left text-text-accent mt-[212px] transition-all duration-700 ${
+              isVisible 
+                ? 'opacity-100 transform translate-y-0' 
+                : 'opacity-0 transform translate-y-8'
+            }`}
             style={{ fontFamily: 'Oswald' }}
           >
             OUR SPONSORS
@@ -58,17 +120,38 @@ const SponsorsSection = () => {
             {sponsors?.map((sponsor, index) => (
               <div
                 key={index}
-                className={`flex flex-col justify-center items-center w-[200px] h-auto rounded-2xl shadow-[0px_4px_4px_#d81c1e] ${sponsor?.padding}`}
-                style={{ background: 'linear-gradient(228deg, #460505 0%, #ac0d0d 100%)' }}
+                className={`sponsor-card flex flex-col justify-center items-center w-[200px] h-auto rounded-2xl shadow-[0px_4px_4px_#d81c1e] ${sponsor?.padding} 
+                  transition-all duration-1000 ease-out cursor-pointer group overflow-hidden
+                  hover:transform hover:scale-105 hover:-translate-y-2 
+                  hover:shadow-[0px_8px_16px_#d81c1e] hover:animate-pulse-glow
+                  active:scale-95 active:transition-transform active:duration-150
+                  ${visibleSponsors?.includes(index) 
+                    ? 'opacity-100 transform translate-x-0 scale-100 animate-slide-in-horizontal' 
+                    : 'opacity-0 transform translate-x-[-100px] scale-95'
+                  }
+                `}
+                style={{ 
+                  background: 'linear-gradient(228deg, #460505 0%, #ac0d0d 100%)',
+                  animationDelay: `${index * 0.2}s`,
+                  animationFillMode: 'both',
+                  border: '2px solid #d81c1e'
+                }}
               >
                 <img 
                   src={sponsor?.src}
                   alt={sponsor?.alt}
-                  className={`${sponsor?.borderRadius || 'rounded-sm'} ${sponsor?.marginTop || ''}`}
+                  className={`${sponsor?.borderRadius || 'rounded-sm'} ${sponsor?.marginTop || ''} 
+                    transition-all duration-500 ease-in-out
+                    group-hover:transform group-hover:scale-110 group-hover:brightness-110
+                    group-hover:filter group-hover:drop-shadow-lg
+                    group-active:scale-100 group-active:brightness-100
+                    ${sponsor?.cardType ? 'border-2 border-red-600' : ''}
+                  `}
                   style={{ 
                     width: sponsor?.width, 
                     maxWidth: '100%',
-                    height: 'auto'
+                    height: 'auto',
+                    ...sponsor?.cropStyle // Apply cropping styles for new cards
                   }}
                 />
               </div>

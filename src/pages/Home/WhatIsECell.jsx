@@ -1,6 +1,11 @@
 import React from 'react';
+import useAnimatedCounter from '../../hooks/useAnimatedCounter';
 
 const WhatIsECell = () => {
+  const yearsCounter = useAnimatedCounter(10, 2000, '');
+  const headsCounter = useAnimatedCounter(14, 2200, '');
+  const membersCounter = useAnimatedCounter(100, 2500, '+');
+
   return (
     <section 
       className="w-full bg-background-dark relative"
@@ -34,30 +39,30 @@ const WhatIsECell = () => {
             }}
           >
             <div className="flex flex-col sm:flex-row justify-between items-start w-full max-w-[88%] mx-auto gap-8 sm:gap-0">
-              <div className="text-center w-full sm:w-[20%]">
+              <div className="text-center w-full sm:w-[20%]" ref={yearsCounter?.elementRef}>
                 <p 
-                  className="text-[24px] sm:text-[32px] md:text-[40px] lg:text-3xl font-bold leading-[30px] sm:leading-[40px] md:leading-[50px] lg:leading-3xl text-text-light mb-[12px]"
+                  className="text-[24px] sm:text-[32px] md:text-[40px] lg:text-3xl font-bold leading-[30px] sm:leading-[40px] md:leading-[50px] lg:leading-3xl text-text-light mb-[12px] transition-all duration-300"
                   style={{ fontFamily: 'Oxygen' }}
                 >
-                  10<br />YEARS
+                  {yearsCounter?.displayValue}<br />YEARS
                 </p>
               </div>
               
-              <div className="text-center w-full sm:w-[22%] self-center">
+              <div className="text-center w-full sm:w-[22%] self-center" ref={headsCounter?.elementRef}>
                 <p 
-                  className="text-[24px] sm:text-[32px] md:text-[40px] lg:text-3xl font-bold leading-[30px] sm:leading-[40px] md:leading-[50px] lg:leading-3xl text-text-light"
+                  className="text-[24px] sm:text-[32px] md:text-[40px] lg:text-3xl font-bold leading-[30px] sm:leading-[40px] md:leading-[50px] lg:leading-3xl text-text-light transition-all duration-300"
                   style={{ fontFamily: 'Oxygen' }}
                 >
-                  14<br />HEADS
+                  {headsCounter?.displayValue}<br />HEADS
                 </p>
               </div>
               
-              <div className="text-center w-full sm:w-[22%] self-end">
+              <div className="text-center w-full sm:w-[22%] self-end" ref={membersCounter?.elementRef}>
                 <p 
-                  className="text-[24px] sm:text-[32px] md:text-[40px] lg:text-3xl font-bold leading-[30px] sm:leading-[40px] md:leading-[50px] lg:leading-3xl text-text-light"
+                  className="text-[24px] sm:text-[32px] md:text-[40px] lg:text-3xl font-bold leading-[30px] sm:leading-[40px] md:leading-[50px] lg:leading-3xl text-text-light transition-all duration-300"
                   style={{ fontFamily: 'Oxygen' }}
                 >
-                  100 +<br />MEMBERS
+                  {membersCounter?.displayValue}<br />MEMBERS
                 </p>
               </div>
             </div>

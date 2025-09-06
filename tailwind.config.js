@@ -103,6 +103,57 @@ module.exports = {
         'open': ['Open Sans', 'sans-serif'],
         'oswald': ['Oswald', 'sans-serif'],
         'oxygen': ['Oxygen', 'sans-serif']
+      },
+      animation: {
+        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+        'fade-in-up-delayed': 'fadeInUp 0.8s ease-out 0.2s forwards',
+        'slide-in-horizontal': 'slideInHorizontal 1s ease-out forwards',
+        'float': 'float 3s ease-in-out infinite',
+        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+        'bounce-gentle': 'bounceGentle 2s ease-in-out infinite',
+      },
+      keyframes: {
+        fadeInUp: {
+          '0%': { 
+            opacity: '0', 
+            transform: 'translateY(30px) scale(0.95)' 
+          },
+          '100%': { 
+            opacity: '1', 
+            transform: 'translateY(0) scale(1)' 
+          },
+        },
+        slideInHorizontal: {
+          '0%': { 
+            opacity: '0', 
+            transform: 'translateX(-100px) scale(0.95)' 
+          },
+          '50%': {
+            opacity: '0.7',
+            transform: 'translateX(10px) scale(1.02)'
+          },
+          '100%': { 
+            opacity: '1', 
+            transform: 'translateX(0) scale(1)' 
+          },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-6px)' },
+        },
+        pulseGlow: {
+          '0%, 100%': { 
+            boxShadow: '0px 4px 4px #d81c1e, 0 0 20px rgba(216, 28, 30, 0.3)' 
+          },
+          '50%': { 
+            boxShadow: '0px 6px 8px #d81c1e, 0 0 30px rgba(216, 28, 30, 0.5)' 
+          },
+        },
+        bounceGentle: {
+          '0%, 20%, 50%, 80%, 100%': { transform: 'translateY(0)' },
+          '40%': { transform: 'translateY(-4px)' },
+          '60%': { transform: 'translateY(-2px)' },
+        },
       }
     }
   },
