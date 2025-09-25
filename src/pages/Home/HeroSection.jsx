@@ -5,7 +5,7 @@ const HeroSection = () => {
     <section
       className="w-full bg-background-dark relative"
       style={{
-        backgroundImage: "url('/images/img_.png')",
+        // backgroundImage: "url('/images/img_.png')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
