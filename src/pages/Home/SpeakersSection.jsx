@@ -6,7 +6,7 @@ const SpeakersSection = () => {
   const speakers = [
     {
       id: 1,
-      image: '/images/img_Ashish_55.png',
+      image: '/images/img_Ashish_55.jpeg',
       name: 'Mr. Ashish Chanchlani',
     },
     {
